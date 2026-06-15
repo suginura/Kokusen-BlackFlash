@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "kokusen-blackflash",
+	"version": "${version}",
+	"name": "Kokusen-BlackFlash",
+	"description": "A Fabric MOD I made as practice, that lets you perform a critical punch from a certain manga.",
+	"authors": [
+		"suginura!"
+	],
+	"contact": {
+		"sources": "https://github.com/suginura/Kokusen-BlackFlash"
+	},
+	"license": "MIT",
+	"icon": "assets/kokusen-blackflash/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"io.github.suginura.kokusenblackflash.KokusenBlackFlash"
+		],
+		"client": [
+			"io.github.suginura.kokusenblackflash.client.KokusenBlackFlashClient"
+		],
+		"fabric-datagen": [
+			"io.github.suginura.kokusenblackflash.client.KokusenBlackFlashDataGenerator"
+		]
+	},
+	"mixins": [
+		"kokusen-blackflash.mixins.json",
+		{
+			"config": "kokusen-blackflash.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~26.1.2",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}

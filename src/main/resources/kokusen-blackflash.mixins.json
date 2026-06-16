@@ -3,7 +3,8 @@
 	"package": "io.github.suginura.kokusenblackflash.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"mixins": [
-		"ExampleMixin"
+		"ExampleMixin",
+		"KokusenAttackMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

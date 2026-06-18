@@ -1,3 +1,5 @@
+// 初期値とデータのセーブとロードメソッド.
+
 package io.github.suginura.kokusenblackflash.config;
 
 import com.google.gson.Gson;

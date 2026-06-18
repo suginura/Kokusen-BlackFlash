@@ -2,14 +2,16 @@ package io.github.suginura.kokusenblackflash.mixin;
 
 import io.github.suginura.kokusenblackflash.config.KokusenConfig;
 
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 
 @Mixin(Player.class)
 public class KokusenAttackMixin {
@@ -32,8 +34,18 @@ public class KokusenAttackMixin {
             ),
             index = 1
     )
-    private float modifyTotalDamage(float totalDamage){
+    private float modifyTotalDamage(float totalDamage){ // ここでダメージ・SE・エフェクトを追加する.
         if(this.isKokusen){
+            Player player = (Player)(Object)this;
+            Level level = player.level();
+            if(!level.isClientSide()){
+                level.playSound(null, player.blockPosition(),
+                        SoundEvents.GENERIC_EXPLODE.value(),SoundSource.PLAYERS, 1.2f, 2.0f);
+                level.playSound(null, player.blockPosition(),
+                        SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.PLAYERS, 0.4f, 1.0f);
+                level.playSound(null, player.blockPosition(),
+                        SoundEvents.PLAYER_ATTACK_CRIT,SoundSource.PLAYERS, 2.0f, 1.0f);
+            }
             return totalDamage * KokusenConfig.kokusenDmgMultiplier;
         }
         return totalDamage;

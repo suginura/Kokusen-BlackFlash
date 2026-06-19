@@ -12,12 +12,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class KokusenConfig {
-    public static float kokusenPer= 0.11F; // 0.00f~100.00fを指定することで確率を指定する.
+    public static float kokusenPer = 0.11F; // 0.00f~100.00fを指定することで確率を指定する.
     public static float kokusenDmgMultiplier = 50.0F; // ダメージ倍率. 1.0f~100.0fの間.
+    public  static float kokusenKnockBack = 5.0f; // ノックバックの強さ.
 
     private static class ConfigData {
         float kokusenPer = KokusenConfig.kokusenPer;
         float kokusenDmgMultiplier = KokusenConfig.kokusenDmgMultiplier;
+        float kokusenKnockBack = KokusenConfig.kokusenKnockBack;
     }
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
@@ -40,6 +42,7 @@ public class KokusenConfig {
             ConfigData data = GSON.fromJson(Files.readString(CONFIG_PATH), ConfigData.class);
             kokusenPer = data.kokusenPer;
             kokusenDmgMultiplier = data.kokusenDmgMultiplier;
+            kokusenKnockBack = data.kokusenKnockBack;
         } catch (IOException e){
             KokusenBlackFlash.LOGGER.error(e.getMessage());
         }

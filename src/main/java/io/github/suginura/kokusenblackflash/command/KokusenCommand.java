@@ -34,13 +34,18 @@ public class KokusenCommand {
         dispatcher.register(
                 Commands.literal("kokusen")
                         .then(Commands.literal("per")
-                            .then(Commands.argument("value", FloatArgumentType.floatArg(0.0f, 100.0f))
-                                    .executes(KokusenCommand::executePer)
-                            )
+                                .then(Commands.argument("value", FloatArgumentType.floatArg(0.0f, 100.0f))
+                                        .executes(KokusenCommand::executePer)
+                                )
                         )
                         .then(Commands.literal("dmgMultiplier")
                                 .then(Commands.argument("value", FloatArgumentType.floatArg(1.0f, 100.0f))
                                         .executes(KokusenCommand::executeDmgMultiplier)
+                                )
+                        )
+                        .then(Commands.literal("knockback")
+                                .then(Commands.argument("value", FloatArgumentType.floatArg(0.5f, 100.0f))
+                                        .executes(KokusenCommand::executeKnockback)
                                 )
                         )
         );
@@ -65,6 +70,18 @@ public class KokusenCommand {
         KokusenConfig.save();
         context.getSource().sendSuccess(
                 () -> Component.literal("kokusenダメージ倍率を" + KokusenConfig.kokusenDmgMultiplier + "倍に変更しました (kokusen damage multiplier set to " + KokusenConfig.kokusenDmgMultiplier + "x)"),
+                true
+        );
+        return 1;
+    }
+
+    private  static int executeKnockback(
+            CommandContext<CommandSourceStack> context
+    ){
+        KokusenConfig.kokusenKnockBack = FloatArgumentType.getFloat(context, "value");
+        KokusenConfig.save();
+        context.getSource().sendSuccess(
+                () -> Component.literal("kokusenノックバック威力を" + KokusenConfig.kokusenKnockBack + "に変更しました (kokusen knockback set to " + KokusenConfig.kokusenKnockBack + ")"),
                 true
         );
         return 1;
